@@ -42,8 +42,8 @@ Execute from the working directory:
 
 ```
 docker run --rm \
-  -e PLUGIN_FB_PAGE_TOKEN=xxxxxxx \
-  -e PLUGIN_FB_VERIFY_TOKEN=xxxxxxx \
+  -e PLUGIN_GOOGLE_USERNAME=xxxxxxx \
+  -e PLUGIN_GOOGLE_PASSWORD=xxxxxxx \
   -e PLUGIN_TO=xxxxxxx \
   -e PLUGIN_MESSAGE=test \
   -e DRONE_REPO_OWNER=appleboy \
