@@ -1,13 +1,13 @@
 package main
 
 import (
+	"crypto/tls"
 	"errors"
 	"fmt"
 	"log"
-	"strconv"
 	"strings"
 
-	"github.com/paked/messenger"
+	"github.com/mattn/go-xmpp"
 )
 
 type (
@@ -31,11 +31,10 @@ type (
 
 	// Config for the plugin.
 	Config struct {
-		PageToken   string
-		VerifyToken string
-		Verify      bool
-		To          []string
-		Message     []string
+		Username string
+		Password string
+		To       []string
+		Message  []string
 	}
 
 	// Plugin values.
@@ -60,29 +59,13 @@ func trimElement(keys []string) []string {
 	return newKeys
 }
 
-func parseID(keys []string) []int64 {
-	var newKeys []int64
-
-	for _, value := range keys {
-		id, err := strconv.ParseInt(value, 10, 64)
-		if err != nil {
-			log.Println(err.Error())
-
-			continue
-		}
-		newKeys = append(newKeys, id)
-	}
-
-	return newKeys
-}
-
 // Exec executes the plugin.
 func (p Plugin) Exec() error {
 
-	if len(p.Config.PageToken) == 0 || len(p.Config.VerifyToken) == 0 || len(p.Config.To) == 0 {
-		log.Println("missing facebook config")
+	if len(p.Config.Username) == 0 || len(p.Config.Password) == 0 || len(p.Config.To) == 0 {
+		log.Println("missing google config")
 
-		return errors.New("missing facebook config")
+		return errors.New("missing google config")
 	}
 
 	var message []string
@@ -92,24 +75,34 @@ func (p Plugin) Exec() error {
 		message = p.Message(p.Repo, p.Build)
 	}
 
-	// Create a new messenger client
-	client := messenger.New(messenger.Options{
-		Verify:      p.Config.Verify,
-		Token:       p.Config.PageToken,
-		VerifyToken: p.Config.VerifyToken,
-	})
+	xmpp.DefaultConfig = tls.Config{
+		ServerName:         "talk.google.com",
+		InsecureSkipVerify: true,
+	}
 
-	// parse ids
-	ids := parseID(p.Config.To)
+	options := xmpp.Options{
+		Host:          "talk.google.com:443",
+		User:          p.Config.Username,
+		Password:      p.Config.Password,
+		NoTLS:         false,
+		Debug:         false,
+		Session:       false,
+		Status:        "xa",
+		StatusMessage: "I for one welcome our new codebot overlords.",
+	}
+
+	talk, err := options.NewClient()
+
+	if err != nil {
+		log.Println(err.Error())
+
+		return err
+	}
 
 	// send message.
-	for _, value := range ids {
-		To := messenger.Recipient{
-			ID: value,
-		}
-
+	for _, to := range trimElement(p.Config.To) {
 		for _, value := range trimElement(message) {
-			client.Send(To, value)
+			talk.Send(xmpp.Chat{Remote: to, Type: "chat", Text: value})
 		}
 	}
 

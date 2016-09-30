@@ -1,9 +1,11 @@
-package: github.com/appleboy/drone-facebook
+package: github.com/appleboy/drone-gtalk
 import:
 - package: github.com/joho/godotenv
   subpackages:
   - autoload
+- package: github.com/mattn/go-xmpp
 - package: github.com/urfave/cli
-  version: v1.18.1
+testImport:
 - package: github.com/stretchr/testify
-- package: github.com/paked/messenger
+  subpackages:
+  - assert

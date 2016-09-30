@@ -1,8 +1,5 @@
-FROM alpine:3.4
+FROM centurylink/ca-certs
 
-RUN apk update && \
-  apk add ca-certificates && \
-  rm -rf /var/cache/apk/*
+ADD drone-gtalk /
 
-ADD drone-gtalk /bin/
-ENTRYPOINT ["/bin/drone-gtalk"]
+ENTRYPOINT ["/drone-gtalk"]

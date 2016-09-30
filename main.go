@@ -12,25 +12,20 @@ var Version string
 
 func main() {
 	app := cli.NewApp()
-	app.Name = "facebook plugin"
-	app.Usage = "facebook plugin"
+	app.Name = "gtalk plugin"
+	app.Usage = "gtalk plugin"
 	app.Action = run
 	app.Version = Version
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
-			Name:   "page.token",
-			Usage:  "facebook page token",
-			EnvVar: "PLUGIN_FB_PAGE_TOKEN,FB_PAGE_TOKEN",
+			Name:   "google.username",
+			Usage:  "gtalk page token",
+			EnvVar: "PLUGIN_GOOGLE_USERNAME,GOOGLE_USERNAME",
 		},
 		cli.StringFlag{
-			Name:   "verify.token",
-			Usage:  "facebook verify token",
-			EnvVar: "PLUGIN_FB_VERIFY_TOKEN,FB_VERIFY_TOKEN",
-		},
-		cli.BoolFlag{
-			Name:   "verify",
-			Usage:  "verifying webhooks on the Facebook Developer Portal",
-			EnvVar: "PLUGIN_VERIFY",
+			Name:   "google.password",
+			Usage:  "gtalk verify token",
+			EnvVar: "PLUGIN_GOOGLE_PASSWORD,GOOGLE_PASSWORD",
 		},
 		cli.StringSliceFlag{
 			Name:   "to",
@@ -39,7 +34,7 @@ func main() {
 		},
 		cli.StringSliceFlag{
 			Name:   "message",
-			Usage:  "facebook message",
+			Usage:  "gtalk message",
 			EnvVar: "PLUGIN_MESSAGE",
 		},
 		cli.StringFlag{
@@ -116,11 +111,10 @@ func run(c *cli.Context) error {
 			Link:    c.String("build.link"),
 		},
 		Config: Config{
-			PageToken:   c.String("page.token"),
-			VerifyToken: c.String("verify.token"),
-			Verify:      c.Bool("verify"),
-			To:          c.StringSlice("to"),
-			Message:     c.StringSlice("message"),
+			Username: c.String("google.username"),
+			Password: c.String("google.password"),
+			To:       c.StringSlice("to"),
+			Message:  c.StringSlice("message"),
 		},
 	}
 
