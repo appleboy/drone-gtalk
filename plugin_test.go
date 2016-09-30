@@ -18,8 +18,8 @@ func TestMissingDefaultConfig(t *testing.T) {
 func TestMissingUserConfig(t *testing.T) {
 	plugin := Plugin{
 		Config: Config{
-			PageToken:   "123456789",
-			VerifyToken: "123456789",
+			Username: "123456789",
+			Password: "123456789",
 		},
 	}
 
@@ -67,11 +67,10 @@ func TestSendMessage(t *testing.T) {
 		},
 
 		Config: Config{
-			PageToken:   os.Getenv("FB_PAGE_TOKEN"),
-			VerifyToken: os.Getenv("FB_VERIFY_TOKEN"),
-			Verify:      false,
-			To:          []string{os.Getenv("FB_TO"), "中文ID", "1234567890"},
-			Message:     []string{"Test Facebook Bot From Travis or Local", " "},
+			Username: os.Getenv("GOOGLE_USERNAME"),
+			Password: os.Getenv("GOOGLE_PASSWORD"),
+			To:       []string{os.Getenv("GOOGLE_TO"), "中文ID", "1234567890"},
+			Message:  []string{"Test Google Chat Bot From Travis or Local", " "},
 		},
 	}
 
@@ -96,19 +95,4 @@ func TestTrimElement(t *testing.T) {
 	result = []string{"1", "2"}
 
 	assert.Equal(t, result, trimElement(input))
-}
-
-func TestParseID(t *testing.T) {
-	var input []string
-	var result []int64
-
-	input = []string{"1", "測試", "3"}
-	result = []int64{int64(1), int64(3)}
-
-	assert.Equal(t, result, parseID(input))
-
-	input = []string{"1", "2"}
-	result = []int64{int64(1), int64(2)}
-
-	assert.Equal(t, result, parseID(input))
 }
