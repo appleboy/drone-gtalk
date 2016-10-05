@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/appleboy/drone-gtalk.svg?branch=master)](https://travis-ci.org/appleboy/drone-gtalk) [![codecov](https://codecov.io/gh/appleboy/drone-gtalk/branch/master/graph/badge.svg)](https://codecov.io/gh/appleboy/drone-gtalk) [![Go Report Card](https://goreportcard.com/badge/github.com/appleboy/drone-gtalk)](https://goreportcard.com/report/github.com/appleboy/drone-gtalk)
 
-Drone plugin for sending Gtalk notifications.
+[Drone](https://github.com/drone/drone) plugin for sending Gtalk notifications.
 
 ## Build
 
