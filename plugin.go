@@ -7,6 +7,7 @@ import (
 	"log"
 	"strings"
 
+	"github.com/appleboy/drone-facebook/template"
 	"github.com/mattn/go-xmpp"
 )
 
@@ -19,14 +20,16 @@ type (
 
 	// Build information.
 	Build struct {
-		Event   string
-		Number  int
-		Commit  string
-		Message string
-		Branch  string
-		Author  string
-		Status  string
-		Link    string
+		Event    string
+		Number   int
+		Commit   string
+		Message  string
+		Branch   string
+		Author   string
+		Status   string
+		Link     string
+		Started  float64
+		Finished float64
 	}
 
 	// Config for the plugin.
@@ -102,7 +105,12 @@ func (p Plugin) Exec() error {
 	// send message.
 	for _, to := range trimElement(p.Config.To) {
 		for _, value := range trimElement(message) {
-			talk.Send(xmpp.Chat{Remote: to, Type: "chat", Text: value})
+			txt, err := template.RenderTrim(value, p)
+			if err != nil {
+				return err
+			}
+
+			talk.Send(xmpp.Chat{Remote: to, Type: "chat", Text: txt})
 		}
 	}
 

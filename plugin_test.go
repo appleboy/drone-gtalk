@@ -70,7 +70,7 @@ func TestSendMessage(t *testing.T) {
 			Username: os.Getenv("GOOGLE_USERNAME"),
 			Password: os.Getenv("GOOGLE_PASSWORD"),
 			To:       []string{os.Getenv("GOOGLE_TO"), "中文ID", "1234567890"},
-			Message:  []string{"Test Google Chat Bot From Travis or Local", " "},
+			Message:  []string{"Test Google Chat Bot From Travis or Local", "commit message: 『{{ build.message }}』", " "},
 		},
 	}
 
