@@ -1,6 +1,16 @@
-hash: 1563595e49f4d81c9819655c7a8b6e18ee75b1d7897c948df7e6e95d18f05328
-updated: 2016-09-30T20:05:56.955031008+08:00
+hash: 1e072e3c319f48201fa2c48a0129c171f4ab3bfccd93ee9453ff17e3ca8d7b03
+updated: 2016-10-31T09:08:21.195130884+08:00
 imports:
+- name: github.com/appleboy/drone-facebook
+  version: abda8124c404d424b150cf2a9935e3e108519c6e
+  subpackages:
+  - template
+- name: github.com/aymerick/raymond
+  version: a2232af10b53ef1ae5a767f5178db3a6c1dab655
+  subpackages:
+  - ast
+  - parser
+  - lexer
 - name: github.com/joho/godotenv
   version: 4ed13390c0acd2ff4e371e64d8b97c8954138243
   subpackages:
@@ -8,7 +18,7 @@ imports:
 - name: github.com/mattn/go-xmpp
   version: 62f9ce32468be9fa73d7d3027490a155f618d034
 - name: github.com/urfave/cli
-  version: d53eb991652b1d438abdd34ce4bfa3ef1539108e
+  version: 3eb41f1bb122ac7535cc7b32db6b78b541879726
 testImports:
 - name: github.com/davecgh/go-spew
   version: 6d212800a42e8ab5c146b8ace3490ee17e5225f9
