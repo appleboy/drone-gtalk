@@ -42,6 +42,7 @@ Execute from the working directory:
 
 ```
 docker run --rm \
+  -e PLUGIN_GOOGLE_HOST=talk.google.com:443 \
   -e PLUGIN_GOOGLE_USERNAME=xxxxxxx \
   -e PLUGIN_GOOGLE_PASSWORD=xxxxxxx \
   -e PLUGIN_TO=xxxxxxx \
