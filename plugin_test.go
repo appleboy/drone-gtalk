@@ -67,6 +67,7 @@ func TestSendMessage(t *testing.T) {
 		},
 
 		Config: Config{
+			Host:     os.Getenv("GOOGLE_HOST"),
 			Username: os.Getenv("GOOGLE_USERNAME"),
 			Password: os.Getenv("GOOGLE_PASSWORD"),
 			To:       []string{os.Getenv("GOOGLE_TO"), "中文ID", "1234567890"},

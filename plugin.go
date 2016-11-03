@@ -34,6 +34,7 @@ type (
 
 	// Config for the plugin.
 	Config struct {
+		Host     string
 		Username string
 		Password string
 		To       []string
@@ -65,7 +66,7 @@ func trimElement(keys []string) []string {
 // Exec executes the plugin.
 func (p Plugin) Exec() error {
 
-	if len(p.Config.Username) == 0 || len(p.Config.Password) == 0 || len(p.Config.To) == 0 {
+	if len(p.Config.Host) == 0 || len(p.Config.Username) == 0 || len(p.Config.Password) == 0 || len(p.Config.To) == 0 {
 		log.Println("missing google config")
 
 		return errors.New("missing google config")
@@ -79,12 +80,11 @@ func (p Plugin) Exec() error {
 	}
 
 	xmpp.DefaultConfig = tls.Config{
-		ServerName:         "talk.google.com",
 		InsecureSkipVerify: true,
 	}
 
 	options := xmpp.Options{
-		Host:          "talk.google.com:443",
+		Host:          p.Config.Host,
 		User:          p.Config.Username,
 		Password:      p.Config.Password,
 		NoTLS:         false,
