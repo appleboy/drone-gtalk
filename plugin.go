@@ -26,6 +26,7 @@ type (
 		Message  string
 		Branch   string
 		Author   string
+		Email    string
 		Status   string
 		Link     string
 		Started  float64
@@ -61,6 +62,19 @@ func trimElement(keys []string) []string {
 	}
 
 	return newKeys
+}
+
+func parseTo(value, authorEmail string) (string, bool) {
+	ids := trimElement(strings.Split(value, ":"))
+
+	if len(ids) > 1 {
+		if email := ids[1]; email != authorEmail {
+			log.Println("email not match")
+			return "", false
+		}
+	}
+
+	return ids[0], true
 }
 
 // Exec executes the plugin.
@@ -104,13 +118,18 @@ func (p Plugin) Exec() error {
 
 	// send message.
 	for _, to := range trimElement(p.Config.To) {
+		user, enable := parseTo(to, p.Build.Email)
+		if !enable {
+			continue
+		}
+
 		for _, value := range trimElement(message) {
 			txt, err := template.RenderTrim(value, p)
 			if err != nil {
 				return err
 			}
 
-			talk.Send(xmpp.Chat{Remote: to, Type: "chat", Text: txt})
+			talk.Send(xmpp.Chat{Remote: user, Type: "chat", Text: txt})
 		}
 	}
 
