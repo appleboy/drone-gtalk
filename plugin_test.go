@@ -61,6 +61,7 @@ func TestSendMessage(t *testing.T) {
 			Status:  "success",
 			Link:    "https://github.com/appleboy/go-hello",
 			Author:  "Bo-Yi Wu",
+			Email:   "test@gmail.com",
 			Branch:  "master",
 			Message: "update travis by drone plugin",
 			Commit:  "e7c4f0a63ceeb42a39ac7806f7b51f3f0d204fd2",
@@ -70,7 +71,7 @@ func TestSendMessage(t *testing.T) {
 			Host:     os.Getenv("GOOGLE_HOST"),
 			Username: os.Getenv("GOOGLE_USERNAME"),
 			Password: os.Getenv("GOOGLE_PASSWORD"),
-			To:       []string{os.Getenv("GOOGLE_TO"), "中文ID", "1234567890"},
+			To:       []string{os.Getenv("GOOGLE_TO"), "中文ID:a@gmail.com", "1234567890"},
 			Message:  []string{"Test Google Chat Bot From Travis or Local", "commit message: 『{{ build.message }}』", " "},
 		},
 	}
@@ -96,4 +97,21 @@ func TestTrimElement(t *testing.T) {
 	result = []string{"1", "2"}
 
 	assert.Equal(t, result, trimElement(input))
+}
+
+func TestParseTo(t *testing.T) {
+	id, enable := parseTo("appleboy@gmail.com", "test@gmail.com")
+
+	assert.Equal(t, true, enable)
+	assert.Equal(t, "appleboy@gmail.com", id)
+
+	id, enable = parseTo("appleboy@gmail.com:test2@gmail.com", "test@gmail.com")
+
+	assert.Equal(t, false, enable)
+	assert.Equal(t, "", id)
+
+	id, enable = parseTo("appleboy@gmail.com:test@gmail.com", "test@gmail.com")
+
+	assert.Equal(t, true, enable)
+	assert.Equal(t, "appleboy@gmail.com", id)
 }
