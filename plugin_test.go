@@ -100,18 +100,17 @@ func TestTrimElement(t *testing.T) {
 }
 
 func TestParseTo(t *testing.T) {
-	id, enable := parseTo("appleboy@gmail.com", "test@gmail.com")
+	input := []string{"a@gmail.com", "b@gmail.com:1@gmail.com", "c@gmail.com:2@gmail.com", "d@gmail.com:3@gmail.com", "e@gmail.com", "f@gmail.com"}
 
-	assert.Equal(t, true, enable)
-	assert.Equal(t, "appleboy@gmail.com", id)
+	ids := parseTo(input, "1@gmail.com", false)
+	assert.Equal(t, []string{"a@gmail.com", "e@gmail.com", "f@gmail.com", "b@gmail.com"}, ids)
 
-	id, enable = parseTo("appleboy@gmail.com:test2@gmail.com", "test@gmail.com")
+	ids = parseTo(input, "1@gmail.com", true)
+	assert.Equal(t, []string{"b@gmail.com"}, ids)
 
-	assert.Equal(t, false, enable)
-	assert.Equal(t, "", id)
+	ids = parseTo(input, "a@gmail.com", false)
+	assert.Equal(t, []string{"a@gmail.com", "e@gmail.com", "f@gmail.com"}, ids)
 
-	id, enable = parseTo("appleboy@gmail.com:test@gmail.com", "test@gmail.com")
-
-	assert.Equal(t, true, enable)
-	assert.Equal(t, "appleboy@gmail.com", id)
+	ids = parseTo(input, "a@gmail.com", true)
+	assert.Equal(t, []string{"a@gmail.com", "e@gmail.com", "f@gmail.com"}, ids)
 }

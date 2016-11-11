@@ -35,11 +35,12 @@ type (
 
 	// Config for the plugin.
 	Config struct {
-		Host     string
-		Username string
-		Password string
-		To       []string
-		Message  []string
+		Host       string
+		Username   string
+		Password   string
+		To         []string
+		Message    []string
+		MatchEmail bool
 	}
 
 	// Plugin values.
@@ -64,17 +65,37 @@ func trimElement(keys []string) []string {
 	return newKeys
 }
 
-func parseTo(value, authorEmail string) (string, bool) {
-	ids := trimElement(strings.Split(value, ":"))
+func parseTo(to []string, authorEmail string, matchEmail bool) []string {
+	var emails []string
+	var ids []string
+	attachEmail := true
 
-	if len(ids) > 1 {
-		if email := ids[1]; email != authorEmail {
-			log.Println("email not match")
-			return "", false
+	for _, value := range to {
+		idArray := trimElement(strings.Split(value, ":"))
+
+		// check match author email
+		if len(idArray) > 1 {
+			if email := idArray[1]; email != authorEmail {
+				continue
+			}
+
+			emails = append(emails, idArray[0])
+			attachEmail = false
+			continue
 		}
+
+		ids = append(ids, idArray[0])
 	}
 
-	return ids[0], true
+	if matchEmail == true && attachEmail == false {
+		return emails
+	}
+
+	for _, value := range emails {
+		ids = append(ids, value)
+	}
+
+	return ids
 }
 
 // Exec executes the plugin.
@@ -116,13 +137,10 @@ func (p Plugin) Exec() error {
 		return err
 	}
 
-	// send message.
-	for _, to := range trimElement(p.Config.To) {
-		user, enable := parseTo(to, p.Build.Email)
-		if !enable {
-			continue
-		}
+	ids := parseTo(p.Config.To, p.Build.Email, p.Config.MatchEmail)
 
+	// send message.
+	for _, user := range ids {
 		for _, value := range trimElement(message) {
 			txt, err := template.RenderTrim(value, p)
 			if err != nil {

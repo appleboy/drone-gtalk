@@ -43,6 +43,11 @@ func main() {
 			Usage:  "gtalk message",
 			EnvVar: "PLUGIN_MESSAGE",
 		},
+		cli.BoolFlag{
+			Name:   "match.email",
+			Usage:  "send message when only match email",
+			EnvVar: "PLUGIN_ONLY_MATCH_EMAIL",
+		},
 		cli.StringFlag{
 			Name:   "repo.owner",
 			Usage:  "repository owner",
@@ -135,11 +140,12 @@ func run(c *cli.Context) error {
 			Finished: c.Float64("job.finished"),
 		},
 		Config: Config{
-			Host:     c.String("google.host"),
-			Username: c.String("google.username"),
-			Password: c.String("google.password"),
-			To:       c.StringSlice("to"),
-			Message:  c.StringSlice("message"),
+			Host:       c.String("google.host"),
+			Username:   c.String("google.username"),
+			Password:   c.String("google.password"),
+			To:         c.StringSlice("to"),
+			Message:    c.StringSlice("message"),
+			MatchEmail: c.Bool("match.email"),
 		},
 	}
 
