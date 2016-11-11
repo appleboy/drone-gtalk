@@ -40,7 +40,7 @@ docker: Error response from daemon: Container command
 
 Execute from the working directory:
 
-```
+```bash
 docker run --rm \
   -e PLUGIN_GOOGLE_HOST=talk.google.com:443 \
   -e PLUGIN_GOOGLE_USERNAME=xxxxxxx \
