@@ -70,7 +70,7 @@ func parseTo(to []string, authorEmail string, matchEmail bool) []string {
 	var ids []string
 	attachEmail := true
 
-	for _, value := range to {
+	for _, value := range trimElement(to) {
 		idArray := trimElement(strings.Split(value, ":"))
 
 		// check match author email
