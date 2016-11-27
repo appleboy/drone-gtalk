@@ -20,6 +20,7 @@ type (
 
 	// Build information.
 	Build struct {
+		Tag      string
 		Event    string
 		Number   int
 		Commit   string
