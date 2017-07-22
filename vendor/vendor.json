@@ -1,0 +1,79 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "oQOyaNHROmz71BmWcxEdVJJ1bTM=",
+			"path": "github.com/appleboy/drone-facebook/template",
+			"revision": "fdda56ebba0f6ab0627f6308612a9e76c6ac6abd",
+			"revisionTime": "2017-04-30T10:16:16Z"
+		},
+		{
+			"checksumSHA1": "PZ4KJai7DnuJ2YNJ2v2l2BseB1g=",
+			"path": "github.com/aymerick/raymond",
+			"revision": "72acac2207479d21dd45898c2a4264246c818148",
+			"revisionTime": "2016-12-09T22:07:24Z"
+		},
+		{
+			"checksumSHA1": "Rvn+RH9pwFno1w6W+mhWsj/PxlA=",
+			"path": "github.com/aymerick/raymond/ast",
+			"revision": "72acac2207479d21dd45898c2a4264246c818148",
+			"revisionTime": "2016-12-09T22:07:24Z"
+		},
+		{
+			"checksumSHA1": "5SJwPK0MYtJt5YiE1BNc9Wl3+S0=",
+			"path": "github.com/aymerick/raymond/lexer",
+			"revision": "72acac2207479d21dd45898c2a4264246c818148",
+			"revisionTime": "2016-12-09T22:07:24Z"
+		},
+		{
+			"checksumSHA1": "TCu/8QBP8TApLjSt13a7Qjnyxrs=",
+			"path": "github.com/aymerick/raymond/parser",
+			"revision": "72acac2207479d21dd45898c2a4264246c818148",
+			"revisionTime": "2016-12-09T22:07:24Z"
+		},
+		{
+			"checksumSHA1": "mrz/kicZiUaHxkyfvC/DyQcr8Do=",
+			"path": "github.com/davecgh/go-spew/spew",
+			"revision": "adab96458c51a58dc1783b3335dcce5461522e75",
+			"revisionTime": "2017-07-11T18:34:51Z"
+		},
+		{
+			"checksumSHA1": "0PYW8zyGI0iZzb5xxZw+veCjgFM=",
+			"path": "github.com/joho/godotenv",
+			"revision": "3ddb2792f3923947290c4932990136e17852a078",
+			"revisionTime": "2017-07-05T04:31:29Z"
+		},
+		{
+			"checksumSHA1": "UE4lhbPYYWEhqHXQk24OA73m5+8=",
+			"path": "github.com/joho/godotenv/autoload",
+			"revision": "3ddb2792f3923947290c4932990136e17852a078",
+			"revisionTime": "2017-07-05T04:31:29Z"
+		},
+		{
+			"checksumSHA1": "PDqq1/hmbSXzS9XmdlNhMAu8Uiw=",
+			"path": "github.com/mattn/go-xmpp",
+			"revision": "906d9d747d2b4c59e60104678b62e464dd1623cf",
+			"revisionTime": "2017-04-23T10:07:54Z"
+		},
+		{
+			"checksumSHA1": "LuFv4/jlrmFNnDb/5SCSEPAM9vU=",
+			"path": "github.com/pmezard/go-difflib/difflib",
+			"revision": "792786c7400a136282c1664665ae0a8db921c6c2",
+			"revisionTime": "2016-01-10T10:55:54Z"
+		},
+		{
+			"checksumSHA1": "J+ppEq6nYMKxhB9+c+MD1x9UwSc=",
+			"path": "github.com/stretchr/testify/assert",
+			"revision": "05e8a0eda380579888eb53c394909df027f06991",
+			"revisionTime": "2017-07-13T16:51:06Z"
+		},
+		{
+			"checksumSHA1": "9LeR7BH4PSu8LRDZ8bY7QY1HXJE=",
+			"path": "github.com/urfave/cli",
+			"revision": "4b90d79a682b4bf685762c7452db20f2a676ecb2",
+			"revisionTime": "2017-07-06T19:46:25Z"
+		}
+	],
+	"rootPath": "github.com/appleboy/drone-gtalk"
+}

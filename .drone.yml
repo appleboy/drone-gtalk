@@ -16,7 +16,6 @@ pipeline:
       TAGS: netgo
       GOPATH: /srv/app
     commands:
-      - make dep_install
       - make vet
       - make lint
       - make test
@@ -24,8 +23,6 @@ pipeline:
       - make build
       # build binary for docker image
       - make static_build
-    when:
-      event: [ push, tag, pull_request ]
 
   release:
     image: appleboy/golang-testing
