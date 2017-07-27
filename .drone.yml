@@ -12,10 +12,7 @@ pipeline:
   test:
     image: appleboy/golang-testing
     pull: true
-    environment:
-      TAGS: netgo
-      GOPATH: /srv/app
-    secrets: [ google_username, google_password, google_to ]
+    secrets: [ google_host, google_username, google_password, google_to ]
     commands:
       - make vet
       - make lint
