@@ -23,6 +23,7 @@ pipeline:
     image: golang:1.11
     pull: true
     group: test
+    secrets: [google_host, google_username, google_password, google_to]
     commands:
       - make test
       - make coverage
