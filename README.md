@@ -7,9 +7,21 @@
 
 [Drone](https://github.com/drone/drone) plugin for sending Gtalk notifications.
 
-## Build
+## Build or Download a binary
 
-Build the binary with the following commands:
+The pre-compiled binaries can be downloaded from [release page](https://github.com/appleboy/drone-gtalk/releases). Support the following OS type.
+
+* Windows amd64/386
+* Linux amd64/386
+* Darwin amd64/386
+
+With `Go` installed
+
+```
+$ go get -u -v github.com/appleboy/drone-gtalk
+``` 
+
+or build the binary with the following command:
 
 ```
 $ make build
