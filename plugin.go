@@ -124,6 +124,7 @@ func (p Plugin) Exec() error {
 	}
 
 	options := xmpp.Options{
+		Host:          p.Config.Host,
 		User:          p.Config.Username,
 		Password:      p.Config.Password,
 		NoTLS:         false,
