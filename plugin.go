@@ -66,6 +66,10 @@ func trimElement(keys []string) []string {
 	return newKeys
 }
 
+func serverName(host string) string {
+	return strings.Split(host, ":")[0]
+}
+
 func parseTo(to []string, authorEmail string, matchEmail bool) []string {
 	var emails []string
 	var ids []string
@@ -115,11 +119,11 @@ func (p Plugin) Exec() error {
 	}
 
 	xmpp.DefaultConfig = tls.Config{
-		InsecureSkipVerify: true,
+		ServerName:         serverName(p.Config.Host),
+		InsecureSkipVerify: false,
 	}
 
 	options := xmpp.Options{
-		Host:          p.Config.Host,
 		User:          p.Config.Username,
 		Password:      p.Config.Password,
 		NoTLS:         false,
