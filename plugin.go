@@ -147,7 +147,9 @@ func (p Plugin) Exec() error {
 				return err
 			}
 
-			talk.Send(xmpp.Chat{Remote: user, Type: "chat", Text: txt})
+			if err := talk.Send(xmpp.Chat{Remote: user, Type: "chat", Text: txt}); err != nil {
+				return err
+			}
 		}
 	}
 
