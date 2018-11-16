@@ -45,6 +45,9 @@ const (
 // Default TLS configuration options
 var DefaultConfig tls.Config
 
+// DebugWriter is the writer used to write debugging output to.
+var DebugWriter io.Writer = os.Stderr
+
 // Cookie is a unique XMPP session identifier
 type Cookie uint64
 
@@ -68,6 +71,11 @@ func (c *Client) JID() string {
 	return c.jid
 }
 
+func containsIgnoreCase(s, substr string) bool {
+	s, substr = strings.ToUpper(s), strings.ToUpper(substr)
+	return strings.Contains(s, substr)
+}
+
 func connect(host, user, passwd string) (net.Conn, error) {
 	addr := host
 
@@ -81,9 +89,26 @@ func connect(host, user, passwd string) (net.Conn, error) {
 	if len(a) == 1 {
 		addr += ":5222"
 	}
+
 	proxy := os.Getenv("HTTP_PROXY")
 	if proxy == "" {
 		proxy = os.Getenv("http_proxy")
+	}
+	// test for no proxy, takes a comma separated list with substrings to match
+	if proxy != "" {
+		noproxy := os.Getenv("NO_PROXY")
+		if noproxy == "" {
+			noproxy = os.Getenv("no_proxy")
+		}
+		if noproxy != "" {
+			nplist := strings.Split(noproxy, ",")
+			for _, s := range nplist {
+				if containsIgnoreCase(addr, s) {
+					proxy = ""
+					break
+				}
+			}
+		}
 	}
 	if proxy != "" {
 		url, err := url.Parse(proxy)
@@ -91,6 +116,7 @@ func connect(host, user, passwd string) (net.Conn, error) {
 			addr = url.Host
 		}
 	}
+
 	c, err := net.Dial("tcp", addr)
 	if err != nil {
 		return nil, err
@@ -501,7 +527,7 @@ func (c *Client) startTLSIfRequired(f *streamFeatures, o *Options, domain string
 // will be returned.
 func (c *Client) startStream(o *Options, domain string) (*streamFeatures, error) {
 	if o.Debug {
-		c.p = xml.NewDecoder(tee{c.conn, os.Stderr})
+		c.p = xml.NewDecoder(tee{c.conn, DebugWriter})
 	} else {
 		c.p = xml.NewDecoder(c.conn)
 	}
@@ -545,6 +571,8 @@ type Chat struct {
 	Remote    string
 	Type      string
 	Text      string
+	Subject   string
+	Thread    string
 	Roster    Roster
 	Other     []string
 	OtherElem []XMLElement
@@ -594,6 +622,8 @@ func (c *Client) Recv() (stanza interface{}, err error) {
 				Remote:    v.From,
 				Type:      v.Type,
 				Text:      v.Body,
+				Subject:   v.Subject,
+				Thread:    v.Thread,
 				Other:     v.OtherStrings(),
 				OtherElem: v.Other,
 				Stamp:     stamp,
@@ -609,7 +639,7 @@ func (c *Client) Recv() (stanza interface{}, err error) {
 			return Presence{v.From, v.To, v.Type, v.Show, v.Status}, nil
 		case *clientIQ:
 			// TODO check more strictly
-			if bytes.Equal(v.Query, []byte(`<ping xmlns='urn:xmpp:ping'/>`)) || bytes.Equal(v.Query, []byte(`<ping xmlns="urn:xmpp:ping"/>`)) {
+			if bytes.Equal(bytes.TrimSpace(v.Query), []byte(`<ping xmlns='urn:xmpp:ping'/>`)) || bytes.Equal(bytes.TrimSpace(v.Query), []byte(`<ping xmlns="urn:xmpp:ping"/>`)) {
 				err := c.SendResultPing(v.ID, v.From)
 				if err != nil {
 					return Chat{}, err
@@ -622,8 +652,19 @@ func (c *Client) Recv() (stanza interface{}, err error) {
 
 // Send sends the message wrapped inside an XMPP message stanza body.
 func (c *Client) Send(chat Chat) (n int, err error) {
-	return fmt.Fprintf(c.conn, "<message to='%s' type='%s' xml:lang='en'>"+"<body>%s</body></message>",
-		xmlEscape(chat.Remote), xmlEscape(chat.Type), xmlEscape(chat.Text))
+	var subtext = ``
+	var thdtext = ``
+	if chat.Subject != `` {
+		subtext = `<subject>` + xmlEscape(chat.Subject) + `</subject>`
+	}
+	if chat.Thread != `` {
+		thdtext = `<thread>` + xmlEscape(chat.Thread) + `</thread>`
+	}
+
+	stanza := "<message to='%s' type='%s' id='%s' xml:lang='en'>" + subtext + "<body>%s</body>" + thdtext + "</message>"
+
+	return fmt.Fprintf(c.conn, stanza,
+		xmlEscape(chat.Remote), xmlEscape(chat.Type), cnonce(), xmlEscape(chat.Text))
 }
 
 // SendOrg sends the original text without being wrapped in an XMPP message stanza.
@@ -798,7 +839,8 @@ type clientPresence struct {
 	Error    *clientError
 }
 
-type clientIQ struct { // info/query
+type clientIQ struct {
+	// info/query
 	XMLName xml.Name `xml:"jabber:client iq"`
 	From    string   `xml:"from,attr"`
 	ID      string   `xml:"id,attr"`
@@ -833,7 +875,7 @@ type rosterItem struct {
 func nextStart(p *xml.Decoder) (xml.StartElement, error) {
 	for {
 		t, err := p.Token()
-		if err != nil && err != io.EOF || t == nil {
+		if err != nil || t == nil {
 			return xml.StartElement{}, err
 		}
 		switch t := t.(type) {
@@ -901,24 +943,10 @@ func next(p *xml.Decoder) (xml.Name, interface{}, error) {
 	return se.Name, nv, err
 }
 
-var xmlSpecial = map[byte]string{
-	'<':  "&lt;",
-	'>':  "&gt;",
-	'"':  "&quot;",
-	'\'': "&apos;",
-	'&':  "&amp;",
-}
-
 func xmlEscape(s string) string {
 	var b bytes.Buffer
-	for i := 0; i < len(s); i++ {
-		c := s[i]
-		if s, ok := xmlSpecial[c]; ok {
-			b.WriteString(s)
-		} else {
-			b.WriteByte(c)
-		}
-	}
+	xml.Escape(&b, []byte(s))
+
 	return b.String()
 }
 

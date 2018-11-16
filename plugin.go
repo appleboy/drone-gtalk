@@ -4,7 +4,6 @@ import (
 	"crypto/tls"
 	"errors"
 	"fmt"
-	"log"
 	"strings"
 
 	"github.com/appleboy/drone-facebook/template"
@@ -106,8 +105,6 @@ func parseTo(to []string, authorEmail string, matchEmail bool) []string {
 // Exec executes the plugin.
 func (p Plugin) Exec() error {
 	if len(p.Config.Host) == 0 || len(p.Config.Username) == 0 || len(p.Config.Password) == 0 || len(p.Config.To) == 0 {
-		log.Println("missing google config")
-
 		return errors.New("missing google config")
 	}
 
@@ -137,8 +134,6 @@ func (p Plugin) Exec() error {
 	talk, err := options.NewClient()
 
 	if err != nil {
-		log.Println(err.Error())
-
 		return err
 	}
 
