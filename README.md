@@ -3,6 +3,7 @@
 # drone-gtalk
 
 [![GoDoc](https://godoc.org/github.com/appleboy/drone-gtalk?status.svg)](https://godoc.org/github.com/appleboy/drone-gtalk) [![Build Status](http://drone.wu-boy.com/api/badges/appleboy/drone-gtalk/status.svg)](http://drone.wu-boy.com/appleboy/drone-gtalk) [![codecov](https://codecov.io/gh/appleboy/drone-gtalk/branch/master/graph/badge.svg)](https://codecov.io/gh/appleboy/drone-gtalk) [![Go Report Card](https://goreportcard.com/badge/github.com/appleboy/drone-gtalk)](https://goreportcard.com/report/github.com/appleboy/drone-gtalk) [![Docker Pulls](https://img.shields.io/docker/pulls/appleboy/drone-gtalk.svg)](https://hub.docker.com/r/appleboy/drone-gtalk/) [![](https://images.microbadger.com/badges/image/appleboy/drone-gtalk.svg)](https://microbadger.com/images/appleboy/drone-gtalk "Get your own image badge on microbadger.com")
+[![Build status](https://ci.appveyor.com/api/projects/status/d7t9jb5ouoa7tk6i?svg=true)](https://ci.appveyor.com/project/appleboy/drone-gtalk)
 
 [Drone](https://github.com/drone/drone) plugin for sending Gtalk notifications.
 
