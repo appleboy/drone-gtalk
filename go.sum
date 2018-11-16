@@ -1,0 +1,13 @@
+github.com/appleboy/drone-facebook v0.0.0-20170430101616-fdda56ebba0f h1:X+DQ0ayEB/dcUp/YcsKzKcgdowjmUUInoRCYhtK1yg0=
+github.com/appleboy/drone-facebook v0.0.0-20170430101616-fdda56ebba0f/go.mod h1:5PxqvgIcQy+Je2Rde2tbxGUG9/emkCHkFqZg/8vf4ZA=
+github.com/aymerick/raymond v0.0.0-20161209220724-72acac220747 h1:gu88ZN3sXG5+1mH0W4Ty00jzHA044ND3ogxmJNN6Rik=
+github.com/aymerick/raymond v0.0.0-20161209220724-72acac220747/go.mod h1:osfaiScAUVup+UC9Nfq76eWqDhXlp+4UYaA8uhTBO6g=
+github.com/davecgh/go-spew v0.0.0-20170711183451-adab96458c51/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/joho/godotenv v0.0.0-20170705043129-3ddb2792f392 h1:38VTepHbzh27jkQU9j+kzk9jIVXN+I1bLK6IszlXcQg=
+github.com/joho/godotenv v0.0.0-20170705043129-3ddb2792f392/go.mod h1:7hK45KPybAkOC6peb+G5yklZfMxEjkZhHbwpqxOKXbg=
+github.com/mattn/go-xmpp v0.0.0-20180505113305-e543ad3fcd51 h1:s/L/Ug5JQz+PEnFW3Zxkw98i0SpyGEacNZziQwBlarI=
+github.com/mattn/go-xmpp v0.0.0-20180505113305-e543ad3fcd51/go.mod h1:Cs5mF0OsrRRmhkyOod//ldNPOwJsrBvJ+1WRspv0xoc=
+github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
+github.com/stretchr/testify v0.0.0-20170714215325-05e8a0eda380/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
+github.com/urfave/cli v0.0.0-20170706194625-4b90d79a682b h1:FODadQeTjwaZzPJjfXdV7nEkc9uQMSYIr7mgczcDk7w=
+github.com/urfave/cli v0.0.0-20170706194625-4b90d79a682b/go.mod h1:70zkFmudgCuE/ngEzBv17Jvp/497gISqfk5gWijbERA=
