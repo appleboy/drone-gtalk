@@ -18,8 +18,8 @@ func TestMissingDefaultConfig(t *testing.T) {
 func TestMissingUserConfig(t *testing.T) {
 	plugin := Plugin{
 		Config: Config{
-			Username: "123456789",
-			Password: "123456789",
+			Username:   "123456789",
+			OAuthToken: "123456789",
 		},
 	}
 
@@ -68,11 +68,11 @@ func TestSendMessage(t *testing.T) {
 		},
 
 		Config: Config{
-			Host:     os.Getenv("GOOGLE_HOST"),
-			Username: os.Getenv("GOOGLE_USERNAME"),
-			Password: os.Getenv("GOOGLE_PASSWORD"),
-			To:       []string{os.Getenv("GOOGLE_TO"), "中文ID:a@gmail.com", "1234567890"},
-			Message:  []string{"Test Google Chat Bot From Travis or Local", "commit message: 『{{ build.message }}』", " "},
+			Host:       os.Getenv("host"),
+			Username:   os.Getenv("username"),
+			OAuthToken: os.Getenv("oauthtoken"),
+			To:         []string{os.Getenv("to"), "中文ID:a@gmail.com", "1234567890"},
+			Message:    []string{"Test Google Chat Bot From Travis or Local", "commit message: 『{{ build.message }}』", " "},
 		},
 	}
 
