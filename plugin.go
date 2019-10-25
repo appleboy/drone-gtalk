@@ -37,7 +37,6 @@ type (
 	Config struct {
 		Host       string
 		Username   string
-		Password   string
 		To         []string
 		Message    []string
 		MatchEmail bool
@@ -105,7 +104,7 @@ func parseTo(to []string, authorEmail string, matchEmail bool) []string {
 
 // Exec executes the plugin.
 func (p Plugin) Exec() error {
-	if len(p.Config.Host) == 0 || len(p.Config.Username) == 0 || len(p.Config.Password) == 0 || len(p.Config.To) == 0 {
+	if len(p.Config.Host) == 0 || len(p.Config.Username) == 0 || len(p.Config.To) == 0 {
 		return errors.New("missing google config")
 	}
 

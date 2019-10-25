@@ -20,20 +20,15 @@ func main() {
 	app.Version = Version
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
-			Name:   "google.host",
+			Name:   "host",
 			Value:  "talk.google.com:443",
 			Usage:  "gtalk host",
 			EnvVar: "PLUGIN_GOOGLE_HOST,GOOGLE_HOST",
 		},
 		cli.StringFlag{
-			Name:   "google.username",
-			Usage:  "gtalk page token",
+			Name:   "username",
+			Usage:  "gtalk user email",
 			EnvVar: "PLUGIN_GOOGLE_USERNAME,GOOGLE_USERNAME",
-		},
-		cli.StringFlag{
-			Name:   "google.password",
-			Usage:  "gtalk verify token",
-			EnvVar: "PLUGIN_GOOGLE_PASSWORD,GOOGLE_PASSWORD",
 		},
 		cli.StringSliceFlag{
 			Name:   "to",
@@ -166,9 +161,8 @@ func run(c *cli.Context) error {
 			Finished: c.Float64("job.finished"),
 		},
 		Config: Config{
-			Host:       c.String("google.host"),
-			Username:   c.String("google.username"),
-			Password:   c.String("google.password"),
+			Host:       c.String("host"),
+			Username:   c.String("username"),
 			To:         c.StringSlice("to"),
 			Message:    c.StringSlice("message"),
 			MatchEmail: c.Bool("match.email"),
