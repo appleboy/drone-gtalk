@@ -106,8 +106,10 @@ func parseTo(to []string, authorEmail string, matchEmail bool) []string {
 
 // Exec executes the plugin.
 func (p Plugin) Exec() error {
-	if len(p.Config.Host) == 0 || len(p.Config.Username) == 0 || len(p.Config.To) == 0 {
-		return errors.New("missing google config")
+	if len(p.Config.Username) == 0 ||
+		len(p.Config.OAuthToken) == 0 ||
+		len(p.Config.To) == 0 {
+		return errors.New("missing config")
 	}
 
 	var message []string
