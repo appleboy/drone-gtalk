@@ -1,10 +1,10 @@
-FROM plugins/base:multiarch
+FROM plugins/base:linux-arm64
 
 LABEL maintainer="Bo-Yi Wu <appleboy.tw@gmail.com>" \
-  org.label-schema.name="Drone GTalk" \
+  org.label-schema.name="Drone gtalk" \
   org.label-schema.vendor="Bo-Yi Wu" \
   org.label-schema.schema-version="1.0"
 
-ADD release/linux/i386/drone-gtalk /bin/
+ADD release/linux/arm64/drone-gtalk /bin/
 
 ENTRYPOINT ["/bin/drone-gtalk"]
