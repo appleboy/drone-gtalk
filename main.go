@@ -23,12 +23,23 @@ func main() {
 			Name:   "host",
 			Value:  "talk.google.com:443",
 			Usage:  "gtalk host",
-			EnvVar: "PLUGIN_GOOGLE_HOST,GOOGLE_HOST",
+			EnvVar: "PLUGIN_HOST,GOOGLE_HOST",
 		},
 		cli.StringFlag{
 			Name:   "username",
 			Usage:  "gtalk user email",
-			EnvVar: "PLUGIN_GOOGLE_USERNAME,GOOGLE_USERNAME",
+			EnvVar: "PLUGIN_USERNAME,GOOGLE_USERNAME",
+		},
+		cli.StringFlag{
+			Name:   "oauthtoken",
+			Usage:  "OAuthToken provides go-xmpp with the required OAuth2 token used to authenticate",
+			EnvVar: "PLUGIN_OAUTH_TOKEN,OAUTH_TOKEN",
+		},
+		cli.StringFlag{
+			Name:   "oauthscope",
+			Usage:  "OAuthScope provides go-xmpp the required scope for OAuth2 authentication.",
+			Value:  "https://www.googleapis.com/auth/googletalk",
+			EnvVar: "PLUGIN_OAUTH_SCOPE,OAUTH_SCOPE",
 		},
 		cli.StringSliceFlag{
 			Name:   "to",
@@ -167,6 +178,8 @@ func run(c *cli.Context) error {
 			Message:    c.StringSlice("message"),
 			MatchEmail: c.Bool("match.email"),
 			Debug:      c.Bool("debug"),
+			OAuthScope: c.String("oauthscope"),
+			OAuthToken: c.String("oauthtoken"),
 		},
 	}
 

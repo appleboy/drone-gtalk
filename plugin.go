@@ -41,6 +41,8 @@ type (
 		Message    []string
 		MatchEmail bool
 		Debug      bool
+		OAuthScope string
+		OAuthToken string
 	}
 
 	// Plugin values.
@@ -124,9 +126,11 @@ func (p Plugin) Exec() error {
 		Host:          p.Config.Host,
 		User:          p.Config.Username,
 		NoTLS:         false,
-		Debug:         true,
+		Debug:         p.Config.Debug,
 		Session:       false,
 		Status:        "xa",
+		OAuthToken:    p.Config.OAuthToken,
+		OAuthScope:    p.Config.OAuthScope,
 		StatusMessage: "I for one welcome our new codebot overlords.",
 	}
 
