@@ -128,6 +128,11 @@ func main() {
 			Usage:  "source env file",
 			EnvVar: "ENV_FILE",
 		},
+		cli.BoolFlag{
+			Name:   "debug",
+			Usage:  "debug mode",
+			EnvVar: "PLUGIN_DEBUG,DEBUG",
+		},
 	}
 
 	err := app.Run(os.Args)
@@ -167,6 +172,7 @@ func run(c *cli.Context) error {
 			To:         c.StringSlice("to"),
 			Message:    c.StringSlice("message"),
 			MatchEmail: c.Bool("match.email"),
+			Debug:      c.Bool("debug"),
 		},
 	}
 

@@ -41,6 +41,7 @@ type (
 		To         []string
 		Message    []string
 		MatchEmail bool
+		Debug      bool
 	}
 
 	// Plugin values.
@@ -123,9 +124,8 @@ func (p Plugin) Exec() error {
 	options := xmpp.Options{
 		Host:          p.Config.Host,
 		User:          p.Config.Username,
-		Password:      p.Config.Password,
 		NoTLS:         false,
-		Debug:         false,
+		Debug:         true,
 		Session:       false,
 		Status:        "xa",
 		StatusMessage: "I for one welcome our new codebot overlords.",
