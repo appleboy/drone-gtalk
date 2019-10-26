@@ -234,11 +234,12 @@
     steps: [
       {
         name: 'telegram',
-        image: 'appleboy/drone-telegram',
+        image: 'appleboy/drone-gtalk',
         pull: 'always',
         settings: {
-          to: { from_secret: 'telegram_to' },
-          token: { from_secret: 'telegram_token' },
+          username: { from_secret: 'GOOGLE_USERNAME' },
+          to: { from_secret: 'TO' },
+          oauth_token: { from_secret: 'OAUTH_TOKEN' },
           message: '{{#success build.status}} ✅  Build #{{build.number}} of `{{repo.name}}` succeeded.\n\n📝 Commit by {{commit.author}} on `{{commit.branch}}`:\n``` {{commit.message}} ```\n\n🌐 {{ build.link }} {{else}} ❌  Build #{{build.number}} of `{{repo.name}}` failed.\n\n📝 Commit by {{commit.author}} on `{{commit.branch}}`:\n``` {{commit.message}} ```\n\n🌐 {{ build.link }} {{/success}}\n',
         },
       },
