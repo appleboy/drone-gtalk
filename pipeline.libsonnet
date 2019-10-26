@@ -233,13 +233,13 @@
     },
     steps: [
       {
-        name: 'telegram',
+        name: 'gtalk',
         image: 'appleboy/drone-gtalk',
         pull: 'always',
         settings: {
-          username: { from_secret: 'GOOGLE_USERNAME' },
-          to: { from_secret: 'TO' },
-          oauth_token: { from_secret: 'OAUTH_TOKEN' },
+          username: { from_secret: 'username' },
+          to: { from_secret: 'to' },
+          oauth_token: { from_secret: 'oauth_token' },
           message: '{{#success build.status}} ✅  Build #{{build.number}} of `{{repo.name}}` succeeded.\n\n📝 Commit by {{commit.author}} on `{{commit.branch}}`:\n``` {{commit.message}} ```\n\n🌐 {{ build.link }} {{else}} ❌  Build #{{build.number}} of `{{repo.name}}` failed.\n\n📝 Commit by {{commit.author}} on `{{commit.branch}}`:\n``` {{commit.message}} ```\n\n🌐 {{ build.link }} {{/success}}\n',
         },
       },

@@ -347,17 +347,17 @@ platform:
   arch: amd64
 
 steps:
-- name: telegram
+- name: gtalk
   pull: always
   image: appleboy/drone-gtalk
   settings:
     message: "{{#success build.status}} ✅  Build #{{build.number}} of `{{repo.name}}` succeeded.\n\n📝 Commit by {{commit.author}} on `{{commit.branch}}`:\n``` {{commit.message}} ```\n\n🌐 {{ build.link }} {{else}} ❌  Build #{{build.number}} of `{{repo.name}}` failed.\n\n📝 Commit by {{commit.author}} on `{{commit.branch}}`:\n``` {{commit.message}} ```\n\n🌐 {{ build.link }} {{/success}}\n"
     oauth_token:
-      from_secret: OAUTH_TOKEN
+      from_secret: oauth_token
     to:
-      from_secret: TO
+      from_secret: to
     username:
-      from_secret: GOOGLE_USERNAME
+      from_secret: username
 
 - name: manifest
   pull: always
