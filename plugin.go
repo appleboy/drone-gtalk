@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/appleboy/drone-facebook/template"
+	"github.com/drone/drone-template-lib/template"
 	"github.com/mattn/go-xmpp"
 )
 
