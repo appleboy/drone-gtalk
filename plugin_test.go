@@ -68,10 +68,10 @@ func TestSendMessage(t *testing.T) {
 		},
 
 		Config: Config{
-			Host:       os.Getenv("host"),
-			Username:   os.Getenv("username"),
-			OAuthToken: os.Getenv("oauthtoken"),
-			To:         []string{os.Getenv("to"), "中文ID:a@gmail.com", "1234567890"},
+			Host:       os.Getenv("GOOGLE_HOST"),
+			Username:   os.Getenv("GOOGLE_USERNAME"),
+			OAuthToken: os.Getenv("OAUTH_TOKEN"),
+			To:         []string{os.Getenv("TO"), "中文ID:a@gmail.com", "1234567890"},
 			Message:    []string{"Test Google Chat Bot From Travis or Local", "commit message: 『{{ build.message }}』", " "},
 		},
 	}
