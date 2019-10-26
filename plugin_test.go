@@ -73,6 +73,7 @@ func TestSendMessage(t *testing.T) {
 			OAuthToken: os.Getenv("OAUTH_TOKEN"),
 			To:         []string{os.Getenv("TO"), "中文ID:a@gmail.com", "1234567890"},
 			Message:    []string{"Test Google Chat Bot From Travis or Local", "commit message: 『{{ build.message }}』", " "},
+			OAuthScope: "https://www.googleapis.com/auth/googletalk",
 		},
 	}
 
