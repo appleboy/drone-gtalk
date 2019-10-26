@@ -31,21 +31,23 @@ func TestMissingUserConfig(t *testing.T) {
 func TestDefaultMessageFormat(t *testing.T) {
 	plugin := Plugin{
 		Repo: Repo{
-			Name:  "go-hello",
-			Owner: "appleboy",
+			Name:      "go-hello",
+			Namespace: "appleboy",
 		},
-		Build: Build{
-			Number:  101,
-			Status:  "success",
-			Link:    "https://github.com/appleboy/go-hello",
+		Commit: Commit{
 			Author:  "Bo-Yi Wu",
 			Branch:  "master",
 			Message: "update travis",
-			Commit:  "e7c4f0a63ceeb42a39ac7806f7b51f3f0d204fd2",
+			Sha:     "e7c4f0a63ceeb42a39ac7806f7b51f3f0d204fd2",
+		},
+		Build: Build{
+			Number: 101,
+			Status: "success",
+			Link:   "https://github.com/appleboy/go-hello",
 		},
 	}
 
-	message := plugin.Message(plugin.Repo, plugin.Build)
+	message := plugin.Message(plugin.Repo, plugin.Build, plugin.Commit)
 
 	assert.Equal(t, []string{"[success] <https://github.com/appleboy/go-hello> (master)『update travis』by Bo-Yi Wu"}, message)
 }
@@ -53,18 +55,19 @@ func TestDefaultMessageFormat(t *testing.T) {
 func TestSendMessage(t *testing.T) {
 	plugin := Plugin{
 		Repo: Repo{
-			Name:  "go-hello",
-			Owner: "appleboy",
+			Name:      "go-hello",
+			Namespace: "appleboy",
+		},
+		Commit: Commit{
+			Author:  "Bo-Yi Wu",
+			Branch:  "master",
+			Message: "update travis",
+			Sha:     "e7c4f0a63ceeb42a39ac7806f7b51f3f0d204fd2",
 		},
 		Build: Build{
-			Number:  101,
-			Status:  "success",
-			Link:    "https://github.com/appleboy/go-hello",
-			Author:  "Bo-Yi Wu",
-			Email:   "test@gmail.com",
-			Branch:  "master",
-			Message: "update travis by drone plugin",
-			Commit:  "e7c4f0a63ceeb42a39ac7806f7b51f3f0d204fd2",
+			Number: 101,
+			Status: "success",
+			Link:   "https://github.com/appleboy/go-hello",
 		},
 
 		Config: Config{
