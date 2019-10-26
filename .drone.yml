@@ -41,10 +41,14 @@ steps:
   - make test
   - make coverage
   environment:
-    TELEGRAM_TO:
-      from_secret: telegram_to
-    TELEGRAM_TOKEN:
-      from_secret: telegram_token
+    GOOGLE_HOST:
+      from_secret: GOOGLE_HOST
+    GOOGLE_USERNAME:
+      from_secret: GOOGLE_USERNAME
+    OAUTH_TOKEN:
+      from_secret: OAUTH_TOKEN
+    TO:
+      from_secret: TO
   volumes:
   - name: gopath
     path: /go

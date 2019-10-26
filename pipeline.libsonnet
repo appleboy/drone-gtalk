@@ -54,8 +54,10 @@
         image: 'golang:1.13',
         pull: 'always',
         environment: {
-          TELEGRAM_TOKEN: { 'from_secret': 'telegram_token' },
-          TELEGRAM_TO: { 'from_secret': 'telegram_to' },
+          GOOGLE_HOST: { 'from_secret': 'GOOGLE_HOST' },
+          GOOGLE_USERNAME: { 'from_secret': 'GOOGLE_USERNAME' },
+          OAUTH_TOKEN: { 'from_secret': 'OAUTH_TOKEN' },
+          TO: { 'from_secret': 'TO' },
         },
         commands: [
           'make test',
