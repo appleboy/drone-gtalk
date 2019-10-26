@@ -10,7 +10,7 @@
 [![microbadger](https://images.microbadger.com/badges/image/appleboy/drone-gtalk.svg)](https://microbadger.com/images/appleboy/drone-gtalk "Get your own image badge on microbadger.com")
 [![Build status](https://ci.appveyor.com/api/projects/status/d7t9jb5ouoa7tk6i?svg=true)](https://ci.appveyor.com/project/appleboy/drone-gtalk)
 
-[Drone](https://github.com/drone/drone) plugin for sending Gtalk notifications.
+[Drone](https://github.com/drone/drone) plugin for sending Gtalk notifications. You can get the OAuth token in [Google playground](https://developers.google.com/oauthplayground/). Please set the scope as `https://www.googleapis.com/auth/googletalk`.
 
 ## Build or Download a binary
 
