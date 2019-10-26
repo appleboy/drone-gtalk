@@ -57,9 +57,14 @@ func main() {
 			EnvVar: "PLUGIN_ONLY_MATCH_EMAIL",
 		},
 		cli.StringFlag{
-			Name:   "repo.owner",
-			Usage:  "repository owner",
-			EnvVar: "DRONE_REPO_OWNER",
+			Name:   "repo",
+			Usage:  "repository owner and repository name",
+			EnvVar: "DRONE_REPO,GITHUB_REPOSITORY",
+		},
+		cli.StringFlag{
+			Name:   "repo.namespace",
+			Usage:  "repository namespace",
+			EnvVar: "DRONE_REPO_OWNER,DRONE_REPO_NAMESPACE,GITHUB_ACTOR",
 		},
 		cli.StringFlag{
 			Name:   "repo.name",
@@ -69,13 +74,23 @@ func main() {
 		cli.StringFlag{
 			Name:   "commit.sha",
 			Usage:  "git commit sha",
-			EnvVar: "DRONE_COMMIT_SHA",
+			EnvVar: "DRONE_COMMIT_SHA,GITHUB_SHA",
+		},
+		cli.StringFlag{
+			Name:   "commit.ref",
+			Usage:  "git commit ref",
+			EnvVar: "DRONE_COMMIT_REF,GITHUB_REF",
 		},
 		cli.StringFlag{
 			Name:   "commit.branch",
 			Value:  "master",
 			Usage:  "git commit branch",
 			EnvVar: "DRONE_COMMIT_BRANCH",
+		},
+		cli.StringFlag{
+			Name:   "commit.link",
+			Usage:  "git commit link",
+			EnvVar: "DRONE_COMMIT_LINK",
 		},
 		cli.StringFlag{
 			Name:   "commit.author",
@@ -86,6 +101,11 @@ func main() {
 			Name:   "commit.author.email",
 			Usage:  "git author email",
 			EnvVar: "DRONE_COMMIT_AUTHOR_EMAIL",
+		},
+		cli.StringFlag{
+			Name:   "commit.author.avatar",
+			Usage:  "git author avatar",
+			EnvVar: "DRONE_COMMIT_AUTHOR_AVATAR",
 		},
 		cli.StringFlag{
 			Name:   "commit.message",
@@ -119,15 +139,20 @@ func main() {
 			Usage:  "build tag",
 			EnvVar: "DRONE_TAG",
 		},
+		cli.StringFlag{
+			Name:   "pull.request",
+			Usage:  "pull request",
+			EnvVar: "DRONE_PULL_REQUEST",
+		},
 		cli.Float64Flag{
 			Name:   "job.started",
 			Usage:  "job started",
-			EnvVar: "DRONE_JOB_STARTED",
+			EnvVar: "DRONE_BUILD_STARTED",
 		},
 		cli.Float64Flag{
 			Name:   "job.finished",
 			Usage:  "job finished",
-			EnvVar: "DRONE_JOB_FINISHED",
+			EnvVar: "DRONE_BUILD_FINISHED",
 		},
 		cli.StringFlag{
 			Name:   "env-file",
@@ -155,22 +180,30 @@ func run(c *cli.Context) error {
 
 	plugin := Plugin{
 		Repo: Repo{
-			Owner: c.String("repo.owner"),
-			Name:  c.String("repo.name"),
+			FullName:  c.String("repo"),
+			Namespace: c.String("repo.namespace"),
+			Name:      c.String("repo.name"),
+		},
+		Commit: Commit{
+			Sha:     c.String("commit.sha"),
+			Ref:     c.String("commit.ref"),
+			Branch:  c.String("commit.branch"),
+			Link:    c.String("commit.link"),
+			Author:  c.String("commit.author"),
+			Email:   c.String("commit.author.email"),
+			Avatar:  c.String("commit.author.avatar"),
+			Message: c.String("commit.message"),
 		},
 		Build: Build{
 			Tag:      c.String("build.tag"),
 			Number:   c.Int("build.number"),
 			Event:    c.String("build.event"),
 			Status:   c.String("build.status"),
-			Commit:   c.String("commit.sha"),
-			Branch:   c.String("commit.branch"),
-			Author:   c.String("commit.author"),
-			Email:    c.String("commit.author.email"),
-			Message:  c.String("commit.message"),
 			Link:     c.String("build.link"),
 			Started:  c.Float64("job.started"),
 			Finished: c.Float64("job.finished"),
+			PR:       c.String("pull.request"),
+			DeployTo: c.String("deploy.to"),
 		},
 		Config: Config{
 			Host:       c.String("host"),

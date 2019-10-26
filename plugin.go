@@ -13,8 +13,21 @@ import (
 type (
 	// Repo information.
 	Repo struct {
-		Owner string
-		Name  string
+		FullName  string
+		Namespace string
+		Name      string
+	}
+
+	// Commit information.
+	Commit struct {
+		Sha     string
+		Ref     string
+		Branch  string
+		Link    string
+		Author  string
+		Avatar  string
+		Email   string
+		Message string
 	}
 
 	// Build information.
@@ -22,15 +35,12 @@ type (
 		Tag      string
 		Event    string
 		Number   int
-		Commit   string
-		Message  string
-		Branch   string
-		Author   string
-		Email    string
 		Status   string
 		Link     string
 		Started  float64
 		Finished float64
+		PR       string
+		DeployTo string
 	}
 
 	// Config for the plugin.
@@ -50,6 +60,7 @@ type (
 		Repo   Repo
 		Build  Build
 		Config Config
+		Commit Commit
 	}
 )
 
@@ -116,7 +127,7 @@ func (p Plugin) Exec() error {
 	if len(p.Config.Message) > 0 {
 		message = p.Config.Message
 	} else {
-		message = p.Message(p.Repo, p.Build)
+		message = p.Message(p.Repo, p.Build, p.Commit)
 	}
 
 	xmpp.DefaultConfig = tls.Config{
@@ -142,7 +153,7 @@ func (p Plugin) Exec() error {
 		return err
 	}
 
-	ids := parseTo(p.Config.To, p.Build.Email, p.Config.MatchEmail)
+	ids := parseTo(p.Config.To, p.Commit.Email, p.Config.MatchEmail)
 
 	// send message.
 	for _, user := range ids {
@@ -162,12 +173,12 @@ func (p Plugin) Exec() error {
 }
 
 // Message is plugin default message.
-func (p Plugin) Message(repo Repo, build Build) []string {
+func (p Plugin) Message(repo Repo, build Build, commit Commit) []string {
 	return []string{fmt.Sprintf("[%s] <%s> (%s)『%s』by %s",
 		build.Status,
 		build.Link,
-		build.Branch,
-		build.Message,
-		build.Author,
+		commit.Branch,
+		commit.Message,
+		commit.Author,
 	)}
 }
