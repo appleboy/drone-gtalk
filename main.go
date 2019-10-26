@@ -44,7 +44,7 @@ func main() {
 		cli.StringSliceFlag{
 			Name:   "to",
 			Usage:  "send message to user",
-			EnvVar: "PLUGIN_TO,GOOGLE_TO",
+			EnvVar: "PLUGIN_TO,TO",
 		},
 		cli.StringSliceFlag{
 			Name:   "message",
@@ -132,6 +132,7 @@ func main() {
 		cli.StringFlag{
 			Name:   "env-file",
 			Usage:  "source env file",
+			Value:  ".env",
 			EnvVar: "ENV_FILE",
 		},
 		cli.BoolFlag{
