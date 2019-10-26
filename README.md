@@ -2,6 +2,7 @@
 
 ![logo](images/logo.png)
 
+[![Build Status](https://cloud.drone.io/api/badges/appleboy/drone-gtalk/status.svg)](https://cloud.drone.io/appleboy/drone-gtalk)
 [![GoDoc](https://godoc.org/github.com/appleboy/drone-gtalk?status.svg)](https://godoc.org/github.com/appleboy/drone-gtalk)
 [![codecov](https://codecov.io/gh/appleboy/drone-gtalk/branch/master/graph/badge.svg)](https://codecov.io/gh/appleboy/drone-gtalk)
 [![Go Report Card](https://goreportcard.com/badge/github.com/appleboy/drone-gtalk)](https://goreportcard.com/report/github.com/appleboy/drone-gtalk)
