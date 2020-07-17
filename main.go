@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	_ "github.com/joho/godotenv/autoload"
 	"github.com/urfave/cli"
 )
 
@@ -13,6 +12,15 @@ import (
 var Version string
 
 func main() {
+	// Load env-file if it exists first
+	if filename, found := os.LookupEnv("PLUGIN_ENV_FILE"); found {
+		godotenv.Load(filename)
+	}
+
+	if _, err := os.Stat("/run/drone/env"); err == nil {
+		godotenv.Overload("/run/drone/env")
+	}
+
 	app := cli.NewApp()
 	app.Name = "gtalk plugin"
 	app.Usage = "gtalk plugin"
@@ -154,12 +162,6 @@ func main() {
 			Usage:  "job finished",
 			EnvVar: "DRONE_BUILD_FINISHED",
 		},
-		cli.StringFlag{
-			Name:   "env-file",
-			Usage:  "source env file",
-			Value:  ".env",
-			EnvVar: "ENV_FILE",
-		},
 		cli.BoolFlag{
 			Name:   "debug",
 			Usage:  "debug mode",
@@ -174,10 +176,6 @@ func main() {
 }
 
 func run(c *cli.Context) error {
-	if c.String("env-file") != "" {
-		_ = godotenv.Load(c.String("env-file"))
-	}
-
 	plugin := Plugin{
 		Repo: Repo{
 			FullName:  c.String("repo"),
